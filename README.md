@@ -50,7 +50,7 @@ The project follows a component-based architecture with key components:
 
 1. **Clone the repository**
    ```
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/Swadesh-c0de/samay-saaranee.git)
    cd school-management-system
    ```
 
