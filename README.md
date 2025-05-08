@@ -51,7 +51,7 @@ The project follows a component-based architecture with key components:
 1. **Clone the repository**
    ```
    git clone https://github.com/Swadesh-c0de/samay-saaranee.git
-   cd school-management-system
+   cd samay-saaranee
    ```
 
 2. **Install dependencies**
