@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiUser, FiMail, FiPhone, FiBook, FiEdit2, FiTrash2, FiChevronDown, FiChevronUp, FiClock, FiCalendar, FiStar, FiAward, FiX } from 'react-icons/fi';
 import EditTeacherModal from './EditTeacherModal';
+import DeleteTeacherModal from './DeleteTeacherModal';
 
 const TeacherCard = ({ teacher, onEdit, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -192,57 +193,12 @@ const TeacherCard = ({ teacher, onEdit, onDelete }) => {
       </motion.div>
 
       {/* Delete Confirmation Dialog */}
-      <AnimatePresence mode="sync">
-        {isDeleteConfirmOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setIsDeleteConfirmOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full p-4 sm:p-6 shadow-xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-2 sm:mb-4">
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100">
-                  Confirm Deletion
-                </h3>
-                <button
-                  onClick={() => setIsDeleteConfirmOpen(false)}
-                  className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <FiX className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400" />
-                </button>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-                Are you sure you want to delete {teacher.name}? This action cannot be undone.
-              </p>
-              <div className="flex justify-end gap-2 sm:gap-3">
-                <button
-                  onClick={() => setIsDeleteConfirmOpen(false)}
-                  className="px-3 py-1.5 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleDelete}
-                  disabled={isLoading}
-                  className="px-3 py-1.5 text-xs sm:text-sm bg-red-500 hover:bg-red-600 text-white rounded shadow-sm hover:shadow transition-all flex items-center gap-1.5"
-                >
-                  {isLoading ? 'Deleting...' : 'Delete'}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <DeleteTeacherModal
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => setIsDeleteConfirmOpen(false)}
+        teacher={teacher}
+        onDelete={handleDelete}
+      />
   
       {/* Edit Modal */}
       <EditTeacherModal
